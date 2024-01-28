@@ -7,12 +7,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { mainNavbarItems } from './consts/navbarItems';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const drawerWidth = 240;
+  const navigate = useNavigate();
 
   return (
     <Drawer
@@ -23,22 +23,26 @@ const Navbar = () => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: '#FFA500',
+            backgroundColor: '#FFA500', // Background color of the left side drawer
           },
         }}
         variant="permanent"
         anchor="left"
       >
+
         <Toolbar />
         <Divider />
         <List>
-          {mainNavbarItems.map((text, index) => (
-            <ListItem key={text.id}>
+          {mainNavbarItems.map((item, index) => (
+            <ListItem 
+                key={item.id}
+                onClick={() => navigate(item.route)}
+            >
               <ListItemButton>
-                <ListItemIcon>
-                  {text.icon}
+                <ListItemIcon sx = {{ color: '#000000' }}>
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text.label} />
+                <ListItemText primary={item.label} />
               </ListItemButton>
             </ListItem>
           ))}
