@@ -90,7 +90,6 @@ router_users.delete('/delete', async (req, res) => {
   try {
     await client.connect();
     const username = req.body;
-    console.log(username);
     await users.deleteOne(username);
     res.status(200).send('Deletion Successful');
   } catch (error) {
