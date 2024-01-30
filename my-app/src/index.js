@@ -12,35 +12,38 @@ import Calender from './pages/Calender/Calender';
 import Chat from './pages/Chat/Chat';
 import Friends from './pages/Friends/Friends';
 import Info from './pages/Info/Info';
+import Newsletter from './pages/Newsletter/Newsletter';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/authentication",
-    element: <div>Authentication</div>,
-  },
-  {
-    path: "/calender",
-    element: <div>Calender</div>,
-  },
-  {
-    path: "/newsletter",
-    element: <div>Newsletter</div>,
-  },
-  {
-    path: "/chat",
-    element: <div>Chat</div>,
-  },
-  {
-    path: "/friends",
-    element: <div>Friends</div>,
-  },
-  {
-    path: "/info",
-    element: <div>Info</div>,
+    children: [
+      {
+        path: "authentication",
+        element: <Authentication />,
+      },
+      {
+        path: "calender",
+        element: <Calender />,
+      },
+      {
+        path: "newsletter",
+        element: <Newsletter />,
+      },
+      {
+        path: "chat",
+        element: <Chat />,
+      },
+      {
+        path: "friends",
+        element: <Friends />,
+      },
+      {
+        path: "info",
+        element: <Info />,
+      },
+    ],
   },
   {
     path: "*",

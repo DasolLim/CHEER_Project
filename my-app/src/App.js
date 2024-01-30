@@ -1,5 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar/Navbar';
+import { Outlet } from "react-router-dom";
+import Grid from '@mui/material/Grid';
 
 // Different Roboto font weights for Material UI
 // import '@fontsource/roboto/300.css';
@@ -9,9 +11,10 @@ import Navbar from './components/Navbar/Navbar';
 
 function App() {
   return (
-    <div className='App'>
-      <Navbar/>
-    </div>
+    <Grid container>
+      <Navbar />
+      <Outlet />
+    </Grid>
   );
 }
 

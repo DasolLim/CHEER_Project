@@ -1,10 +1,11 @@
 import React from 'react';
+import Grid from '@mui/material/Grid';
 
 const Chat = () => {
     return (
-        <div>
-            Chat
-        </div>
+        <Grid item xs={8}>
+            This is chat page.
+        </Grid>
     )
 }
 

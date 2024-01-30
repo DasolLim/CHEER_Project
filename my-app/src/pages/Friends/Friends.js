@@ -1,10 +1,11 @@
 import React from 'react';
+import Grid from '@mui/material/Grid';
 
 const Friends = () => {
     return (
-        <div>
-            Friends
-        </div>
+        <Grid item xs={8}>
+            This is friends page.
+        </Grid>
     )
 }
 

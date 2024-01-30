@@ -1,10 +1,11 @@
 import React from 'react';
+import Grid from '@mui/material/Grid';
 
 const Newsletter = () => {
     return (
-        <div>
-            Newsletter
-        </div>
+        <Grid item xs={8}>
+            This is newsletter page.
+        </Grid>
     )
 }
 

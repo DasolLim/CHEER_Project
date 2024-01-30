@@ -1,12 +1,12 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 
-const Info = () => {
+const Calender = () => {
     return (
         <Grid item xs={8}>
-            This is info page.
+            This is calender page.
         </Grid>
     )
 }
 
-export default Info;
+export default Calender;
