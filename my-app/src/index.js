@@ -7,18 +7,25 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Home from './pages/Home/Home';
 import Authentication from './pages/Authentication/Authentication';
 import Calender from './pages/Calender/Calender';
 import Chat from './pages/Chat/Chat';
 import Friends from './pages/Friends/Friends';
 import Info from './pages/Info/Info';
 import Newsletter from './pages/Newsletter/Newsletter';
+import { ThemeProvider } from '@mui/material/styles';
+import { websiteTheme } from './WebsiteTheme';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "authentication",
         element: <Authentication />,
@@ -53,9 +60,11 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <ThemeProvider theme={websiteTheme}>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

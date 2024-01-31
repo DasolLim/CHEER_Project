@@ -9,6 +9,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { mainNavbarItems } from './consts/navbarItems';
 import { useNavigate } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
+import { Typography } from '@mui/material';
 
 const Navbar = () => {
   const drawerWidth = 240;
@@ -29,10 +31,29 @@ const Navbar = () => {
         variant="permanent"
         anchor="left"
       >
-
         <Toolbar />
+        <Typography
+              variant="h1"
+              color="inherit"
+              style={{ textAlign: 'center' }}
+              display={'flex'}
+              marginLeft={7}
+              padding={'20px'}
+            >
+              CHEER
+            </Typography>
         <Divider />
         <List>
+          <ListItem
+            onClick={() => navigate('/')}
+          >
+            <ListItemButton>
+              <ListItemIcon sx = {{ color: '#000000' }}>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Home'} />
+            </ListItemButton>
+          </ListItem>
           {mainNavbarItems.map((item, index) => (
             <ListItem 
                 key={item.id}
