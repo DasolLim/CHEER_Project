@@ -3,23 +3,26 @@ import Grid from '@mui/material/Grid';
 import Item from '@mui/material/ListItem';
 import temp from '../../Assets/SE3350.jpg';
 import '../../index.css';
+import { Container } from '@mui/material';
 
 const Newsletter = () => {
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={4}>
-                <Item>
-                    <a>
-                        <div class='container'>
-                            <img src={temp} class='standard' alt='Newsletter Object'></img>
-                            <div class='description'>
-                                <p class='title'>January Newsletter</p>
+        <Container>
+            <Grid container spacing={1}>
+                <Grid item xs={4}>
+                    <Item>
+                        <a>
+                            <div class='container'>
+                                <img src={temp} class='standard' alt='Newsletter Object'></img>
+                                <div class='description'>
+                                    <p class='title'>January Newsletter</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </Item>
+                        </a>
+                    </Item>
+                </Grid>
             </Grid>
-        </Grid>
+        </Container>
     )
 }
 
