@@ -3,8 +3,7 @@ import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 
 
-function Login() {
-
+function Register() {
     const history = useNavigate();
 
     const [email, setEmail] = useState('')
@@ -15,15 +14,15 @@ function Login() {
 
         try {
 
-            await axios.post("http://localhost:8000/", {
+            await axios.post("http://localhost:8000/signup", {
                 email, password
             })
                 .then(res => {
                     if (res.data === "exist") {
-                        history("/home", { state: { id: email } })
+                        alert("User already exists")
                     }
                     else if (res.data === "notexist") {
-                        alert("User have not sign up")
+                        history("/home", { state: { id: email } })
                     }
                 })
                 .catch(e => {
@@ -43,7 +42,7 @@ function Login() {
     return (
         <div className="login">
 
-            <h1>Login</h1>
+            <h1>Signup</h1>
 
             <form action="POST">
                 <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
@@ -56,10 +55,10 @@ function Login() {
             <p>OR</p>
             <br />
 
-            <Link to="/signup">Signup Page</Link>
+            <Link to="/">Login Page</Link>
 
         </div>
     )
 }
 
-export default Login
+export default Register

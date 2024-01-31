@@ -4,7 +4,8 @@ import { useNavigate, Link } from "react-router-dom"
 
 
 function Login() {
-    const history = useNavigate();
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -14,15 +15,15 @@ function Login() {
 
         try {
 
-            await axios.post("http://localhost:8000/signup", {
+            await axios.post("http://localhost:8000/", {
                 email, password
             })
                 .then(res => {
-                    if (res.data == "exist") {
-                        alert("User already exists")
+                    if (res.data === "exist") {
+                        navigate("/home", { state: { id: email } })
                     }
-                    else if (res.data == "notexist") {
-                        history("/home", { state: { id: email } })
+                    else if (res.data === "notexist") {
+                        alert("User have not sign up")
                     }
                 })
                 .catch(e => {
@@ -42,7 +43,7 @@ function Login() {
     return (
         <div className="login">
 
-            <h1>Signup</h1>
+            <h1>Login</h1>
 
             <form action="POST">
                 <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
@@ -55,7 +56,7 @@ function Login() {
             <p>OR</p>
             <br />
 
-            <Link to="/">Login Page</Link>
+            <Link to="/signup">Signup Page</Link>
 
         </div>
     )

@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './DavidsApp';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import Home from './pages/Home/Home';
-import Authentication from './pages/Authentication/Authentication';
+//import Authentication from './pages/Authentication/Authentication';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
 import Calender from './pages/Calender/Calender';
 import Chat from './pages/Chat/Chat';
 import Friends from './pages/Friends/Friends';
@@ -27,8 +29,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "authentication",
-        element: <Authentication />,
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
       {
         path: "calender",
