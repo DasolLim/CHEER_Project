@@ -7,6 +7,10 @@ const router_users = express.Router();
 router_users.use(express.json());
 app.use('/api/users',router_users);
 
+const router_events = express.Router();
+router_events.use(express.json());
+app.use('/api/events', router_events);
+
 //Setup middleware to do logging
 app.use((req, res, next) => {
   console.log(`${req.method} request for ${req.url}`);
@@ -42,6 +46,7 @@ run().catch(console.dir);
 //Database of users
 const db = client.db("CHEER");
 const users = db.collection('users');
+const events = db.collection('events');
 
 //Assign a port
 let port = 3000;
@@ -86,6 +91,31 @@ router_users.delete('/delete', async (req, res) => {
   } catch (error) {
     res.status(404).send('User not found');
   } finally {
+    await client.close();
+  }
+});
+
+//EVENTS FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
+router_events.post('/signup', async (req, res) => {
+  try {
+    //Open client
+    await client.connect();
+    //Get login information from HTML body
+    const event = req.body;
+    //Create a document to be inserted
+    const doc = {
+      full_name: event.full_name,
+      email: event.email
+    }
+    //Insert into database
+    await events.insertOne(doc);
+    //Send status response
+    res.status(200).send('Registration Complete');
+  } catch (error) {
+    //Send status response
+    res.status(400).send('Bad Request');
+  } finally {
+    //Close client
     await client.close();
   }
 });
