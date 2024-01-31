@@ -13,15 +13,6 @@ app.use((req, res, next) => {
   next();
 })
 
-//Get mongoose module
-// const mongoose = require('mongoose');
-
-// //Initialize database
-// mongoose.connect('mongodb://localhost/users'); //CHANGE FROM 'LOCALHOST' IN LATER SPRINTS
-// const db = mongoose.connection;
-// db.on('error', (error) => console.log(error));
-// db.once('open', () => console.log('Succesful connection to the database'));
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://ansonruan4:kcvVzdvmkH1Vco4b@se3350-22.99v1apl.mongodb.net/?retryWrites=true&w=majority";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -97,4 +88,4 @@ router_users.delete('/delete', async (req, res) => {
   } finally {
     await client.close();
   }
-})
+});
