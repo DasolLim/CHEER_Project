@@ -2,9 +2,8 @@ import React, { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 
-
 function Register() {
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -22,7 +21,7 @@ function Register() {
                         alert("User already exists")
                     }
                     else if (res.data === "notexist") {
-                        history("/home", { state: { id: email } })
+                        navigate("/", { state: { id: email } })
                     }
                 })
                 .catch(e => {
