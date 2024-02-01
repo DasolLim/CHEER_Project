@@ -21,7 +21,7 @@ function Login() {
             })
                 .then(res => {
                     if (res.data === "exist") {
-                        navigate("/home", { state: { id: email } })
+                        navigate("/", { state: { id: email } })
                     }
                     else if (res.data === "notexist") {
                         alert("User have not sign up")
