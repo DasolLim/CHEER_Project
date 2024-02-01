@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
+import { Container } from "@mui/material";
 
 
 function Login() {
@@ -20,7 +21,7 @@ function Login() {
             })
                 .then(res => {
                     if (res.data === "exist") {
-                        navigate("/home", { state: { id: email } })
+                        navigate("/", { state: { id: email } })
                     }
                     else if (res.data === "notexist") {
                         alert("User have not sign up")
@@ -41,24 +42,26 @@ function Login() {
 
 
     return (
-        <div className="login">
+        <Container>
+            <div className="login">
 
-            <h1>Login</h1>
+                <h1>Login</h1>
 
-            <form action="POST">
-                <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
-                <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
-                <input type="submit" onClick={submit} />
+                <form action="POST">
+                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
+                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
+                    <input type="submit" onClick={submit} />
 
-            </form>
+                </form>
 
-            <br />
-            <p>OR</p>
-            <br />
+                <br />
+                <p>OR</p>
+                <br />
 
-            <Link to="/signup">Signup Page</Link>
+                <Link to="/signup">Signup Page</Link>
 
-        </div>
+            </div>
+        </Container>
     )
 }
 
