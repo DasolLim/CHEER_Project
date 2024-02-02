@@ -4,52 +4,47 @@ import NewspaperRoundedIcon from '@mui/icons-material/NewspaperRounded';
 import ChatRoundedIcon from '@mui/icons-material/ChatRounded';
 import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 export const mainNavbarItems = [
     {
         id: 0,
         icon: <FaceIcon />,
-        label: 'Authentication',
-        route: 'authentication',
-    },
-    {
-        id: 1,
-        icon: <FaceIcon />,
         label: 'Login',
         route: 'login',
     },
     {
-        id: 2,
-        icon: <FaceIcon />,
+        id: 1,
+        icon: <PersonAddAlt1Icon />,
         label: 'Register',
         route: 'register',
     },
     {
-        id: 3,
+        id: 2,
         icon: <CalendarMonthRoundedIcon />,
         label: 'Calender',
         route: 'calender',
     },
     {
-        id: 4,
+        id: 3,
         icon: <NewspaperRoundedIcon />,
         label: 'Newsletter',
         route: 'newsletter',
     },
     {
-        id: 5,
+        id: 4,
         icon: <ChatRoundedIcon />,
         label: 'Chat',
         route: 'chat',
     },
     {
-        id: 6,
+        id: 5,
         icon: <Diversity3RoundedIcon />,
         label: 'Friends',
         route: 'friends',
     },
     {
-        id: 7,
+        id: 6,
         icon: <InfoRoundedIcon />,
         label: 'Info',
         route: 'info',

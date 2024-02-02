@@ -15,12 +15,8 @@ import { Typography } from '@mui/material';
 const Navbar = () => {
   const drawerWidth = 240;
   const navigate = useNavigate();
-  const [drawerOpen, setDrawerOpen] = useState(true);
-
-  const handleDrawerToggle = () => {
-    setDrawerOpen(!drawerOpen);
-  };
-
+  // const drawerOpen = true;
+    
   return (
     <Drawer
       sx={{
@@ -34,9 +30,8 @@ const Navbar = () => {
       }}
       variant="permanent"
       anchor="left"
-      open={drawerOpen}
+      // open={drawerOpen}
     >
-      <button onClick={() => handleDrawerToggle}>Toggle Drawer</button>
       <Toolbar />
       <Typography
         variant="h1"

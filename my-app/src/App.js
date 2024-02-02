@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     const parsedTitle = location.pathname.replace(/\W/g, ' ');
     // Set the default title to "Home" if parsedTitle is empty
-    setTitle(parsedTitle || "Home");
+    setTitle(parsedTitle.trim() || "Home");
   }, [location]);
 
   return (
