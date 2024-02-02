@@ -11,6 +11,8 @@ import { mainNavbarItems } from './consts/navbarItems';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import { Typography } from '@mui/material';
+import { MdMenu, MdMenuOpen } from "react-icons/md";
+import { Container } from '@mui/material';
 
 const Navbar = () => {
   const drawerWidth = 240;
@@ -22,7 +24,8 @@ const Navbar = () => {
   };
 
   return (
-    <Drawer
+    <Container>
+      {drawerOpen ? <Drawer
       sx={{
         width: drawerWidth,
         flexShrink: 0,
@@ -34,9 +37,8 @@ const Navbar = () => {
       }}
       variant="permanent"
       anchor="left"
-      open={drawerOpen}
     >
-      <button onClick={() => handleDrawerToggle}>Toggle Drawer</button>
+      <MdMenuOpen size={50} className='nav_menu' onClick={handleDrawerToggle}/>
       <Toolbar />
       <Typography
         variant="h1"
@@ -67,7 +69,11 @@ const Navbar = () => {
           </ListItem>
         ))}
       </List>
-    </Drawer>
+    </Drawer> : 
+      <div>
+        <MdMenu size={50} className='nav_menu' onClick={handleDrawerToggle}/>
+      </div>}
+    </Container>
   );
 };
 
