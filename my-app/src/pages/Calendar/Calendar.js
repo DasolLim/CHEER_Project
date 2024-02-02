@@ -8,6 +8,10 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
+function getEvents(){
+  //get events
+  setEvents();
+}
 function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
@@ -50,6 +54,7 @@ function ServerDay(props) {
 export default function Calendar() {
   const requestAbortController = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [events, setEvents] = React.useState();
   const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
 
   const fetchHighlightedDays = (date) => {
@@ -72,6 +77,8 @@ export default function Calendar() {
   };
 
   React.useEffect(() => {
+    //get the events
+    getEvents();
     fetchHighlightedDays(initialValue);
     // abort request on unmount
     return () => requestAbortController.current?.abort();
