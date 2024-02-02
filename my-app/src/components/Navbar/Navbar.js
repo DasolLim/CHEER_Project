@@ -22,7 +22,8 @@ const Navbar = () => {
   };
 
   return (
-    <Drawer
+    <div>
+      {drawerOpen ? <Drawer
       sx={{
         width: drawerWidth,
         flexShrink: 0,
@@ -36,7 +37,7 @@ const Navbar = () => {
       anchor="left"
       open={drawerOpen}
     >
-      <button onClick={() => handleDrawerToggle}>Toggle Drawer</button>
+      <button onClick={handleDrawerToggle}>Toggle Drawer</button>
       <Toolbar />
       <Typography
         variant="h1"
@@ -67,7 +68,11 @@ const Navbar = () => {
           </ListItem>
         ))}
       </List>
-    </Drawer>
+    </Drawer> : 
+      <div>
+        <button onClick={handleDrawerToggle}>Toggle Drawer</button>
+      </div>}
+    </div>
   );
 };
 
