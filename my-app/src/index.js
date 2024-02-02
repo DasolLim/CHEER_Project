@@ -16,6 +16,7 @@ import Chat from './pages/Chat/Chat';
 import Friends from './pages/Friends/Friends';
 import Info from './pages/Info/Info';
 import Newsletter from './pages/Newsletter/Newsletter';
+import Jan_news from './pages/Newsletter/News _Pages/Jan_news';
 import { ThemeProvider } from '@mui/material/styles';
 import { websiteTheme } from './WebsiteTheme';
 
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "info",
         element: <Info />,
+      },
+      {
+        path: "jan_news",
+        element: <Jan_news />,
       },
     ],
   },
