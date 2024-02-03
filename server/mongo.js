@@ -9,6 +9,14 @@ mongoose.connect("mongodb://0.0.0.0:27017/group22")
 
 
 const newSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    userType: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true
