@@ -45,23 +45,22 @@ function Login() {
         <Container>
             <div className="login">
 
-                <h1>Login</h1>
+                <h1>Login to CHEER Account</h1>
 
                 <form action="POST">
-                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
-                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
-                    <input type="submit" onClick={submit} />
-
+                    <div class="register-page">
+                        <div class="form">
+                            <form class="register-form">
+                                <input type="text" onChange={(e) => { setPassword(e.target.value) }} placeholder="Email" />
+                                <input type="password" onChange={(e) => { setEmail(e.target.value) }} placeholder="Password" />
+                                <button type="submit" onClick={submit}>login</button>
+                                <p class="message"> Not registered?<a href="register">Register</a></p>
+                            </form>
+                        </div>
+                    </div>
                 </form>
-
-                <br />
-                <p>OR</p>
-                <br />
-
-                <Link to="/signup">Signup Page</Link>
-
-            </div>
-        </Container>
+            </div >
+        </Container >
     )
 }
 

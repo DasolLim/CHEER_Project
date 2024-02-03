@@ -14,7 +14,7 @@ app.get("/", cors(), (req, res) => {
 
 
 app.post("/", async (req, res) => {
-    const { email, password } = req.body
+    const { name, userType, email, password } = req.body
 
     try {
         const check = await collection.findOne({ email: email })
@@ -36,9 +36,11 @@ app.post("/", async (req, res) => {
 
 
 app.post("/signup", async (req, res) => {
-    const { email, password } = req.body
+    const { name, userType, email, password } = req.body
 
     const data = {
+        name: name,
+        userType: userType,
         email: email,
         password: password
     }

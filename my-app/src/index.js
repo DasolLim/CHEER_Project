@@ -11,7 +11,7 @@ import Home from './pages/Home/Home';
 //import Authentication from './pages/Authentication/Authentication';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
-import Calender from './pages/Calender/Calender';
+import Calendar from './pages/Calendar/Calendar';
 import Chat from './pages/Chat/Chat';
 import Friends from './pages/Friends/Friends';
 import Info from './pages/Info/Info';
@@ -38,8 +38,8 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "calender",
-        element: <Calender />,
+        path: "calendar",
+        element: <Calendar />,
       },
       {
         path: "newsletter",

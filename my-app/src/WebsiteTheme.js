@@ -41,10 +41,11 @@ export const websiteTheme = createTheme({
     typography: {
         h1: {
             fontSize: '1.6rem',
-            fontWeight: 600,
+            fontWeight: 700,
             color: '#fff',
             letterSpacing: '0.5px',
             textTransform: 'capitalize',
+            textAlign: 'center',
         },
     },
   });

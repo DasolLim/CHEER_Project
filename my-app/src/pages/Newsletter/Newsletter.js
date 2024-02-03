@@ -11,10 +11,10 @@ const Newsletter = () => {
                 <Grid item xs={4}>
                     <Item>
                         <a href='jan_news'>
-                            <div class='container'>
+                            <div class='newsletter-container'>
                                 <img src={temp} class='standard' alt='Newsletter Object'></img>
-                                <div class='description'>
-                                    <p class='title'>January Newsletter</p>
+                                <div class='newsletter-description'>
+                                    <p class='newsletter-title'>January Newsletter</p>
                                 </div>
                             </div>
                         </a>
@@ -23,10 +23,10 @@ const Newsletter = () => {
                 <Grid item xs={4}>
                     <Item>
                         <a>
-                            <div class='container'>
+                            <div class='newsletter-container'>
                                 <img src={temp} class='standard' alt='Newsletter Object'></img>
-                                <div class='description'>
-                                    <p class='title'>February Newsletter</p>
+                                <div class='newsletter-description'>
+                                    <p class='newsletter-title'>February Newsletter</p>
                                 </div>
                             </div>
                         </a>
@@ -35,10 +35,10 @@ const Newsletter = () => {
                 <Grid item xs={4}>
                     <Item>
                         <a>
-                            <div class='container'>
+                            <div class='newsletter-container'>
                                 <img src={temp} class='standard' alt='Newsletter Object'></img>
-                                <div class='description'>
-                                    <p class='title'>March Newsletter</p>
+                                <div class='newsletter-description'>
+                                    <p class='newsletter-title'>March Newsletter</p>
                                 </div>
                             </div>
                         </a>
