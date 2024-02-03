@@ -11,6 +11,10 @@ const router_events = express.Router();
 router_events.use(express.json());
 app.use('/api/events', router_events);
 
+const router_calendar = express.Router();
+router_calendar.use(express.json());
+app.use('/api/calendar', router_calendar);
+
 //Setup middleware to do logging
 app.use((req, res, next) => {
   console.log(`${req.method} request for ${req.url}`);
@@ -47,9 +51,10 @@ run().catch(console.dir);
 const db = client.db("CHEER");
 const users = db.collection('users');
 const events = db.collection('events');
+const calendar = db.collection('calendar');
 
 //Assign a port
-let port = 3000;
+let port = 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 //USERS FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
@@ -111,6 +116,36 @@ router_events.post('/signup', async (req, res) => {
     await events.insertOne(doc);
     //Send status response
     res.status(200).send('Registration Complete');
+  } catch (error) {
+    //Send status response
+    res.status(400).send('Bad Request');
+  } finally {
+    //Close client
+    await client.close();
+  }
+});
+
+//CALENDAR FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
+router_calendar.post('/create', async (req, res) => {
+  try {
+    //Open client
+    await client.connect();
+    //Get login information from HTML body
+    const event = req.body;
+    //Create a document to be inserted
+    const doc = {
+      description: event.description,
+      event_name: event.full_name,
+      start_time: event.start_time,
+      end_time: event.end_time,
+      date: event.date,
+      capacity: event.capacity,
+      attendees: event.attendees
+    }
+    //Insert into database
+    await events.insertOne(doc);
+    //Send status response
+    res.status(200).send('Signup Complete');
   } catch (error) {
     //Send status response
     res.status(400).send('Bad Request');
