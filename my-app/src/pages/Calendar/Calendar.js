@@ -61,7 +61,8 @@ export default function Calendar() {
     // Simulated fetch
     setTimeout(() => {
       const daysInMonth = date.daysInMonth();
-      const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
+      //assign badge
+      const daysToHighlight = [1, 2, 3].map(() => 3);
       setHighlightedDays(daysToHighlight);
       setIsLoading(false);
     }, 500);
@@ -69,6 +70,9 @@ export default function Calendar() {
 
   const handleDateClick = (date) => {
     // Example: Change information text based on the clicked date
+    if(date.$d === ('Wed Jan 03 2024 00:00:00 GMT-0500 (Eastern Standard Time)')){
+      console.log('correcy');
+    }
     setInformation(`Events on ${date.format('YYYY-MM-DD')}`);
   };
 
@@ -108,9 +112,17 @@ export default function Calendar() {
             }}
           />
         </div>
-        <div className="info-box">
-          <h2>Event Name</h2>
-          <p>{information}</p>
+        <div className={`info-box ${!information ? 'hidden' : ''}`}>
+          {information && (
+            <>
+              <h2>{information}</h2>
+              <p>Cherry Picking 2pm - 6 pm</p>
+              <button id='signUpButton'>See Info</button>
+              <br></br>
+              <p>Outdoor Painting 5pm - 10 pm</p>
+              <button id='signUpButton'>See Info</button>
+            </>
+          )}
         </div>
       </LocalizationProvider>
     </div>

@@ -422,4 +422,26 @@ h1{
   margin-left:200px;
   border-color: 'lightblue';
   border-radius: 10px;
+  text-align: center; /* Center align the content */
+  background-color: #ffb730; /* Set the background color to yellow */
+  padding: 20px; /* Add some padding for spacing */
+}
+#signUpButton{
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 1px solid #007acc;
+  border-radius: 5px;
+  background-color: #007acc;
+  transition: background-color 0.3s ease;
+
+  /* Optional hover effect */
+  &:hover {
+    background-color: white;
+    color: #007acc;
+  }
+}
+
+.hidden{
+  background-color: white;
 }
