@@ -8,10 +8,7 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
-function getEvents(){
-  //get events
-  setEvents();
-}
+
 function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
@@ -31,14 +28,17 @@ function fakeFetch(date, { signal }) {
     };
   });
 }
-
 const initialValue = dayjs('2024-01-31');
 
 function ServerDay(props) {
-  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
+  const { highlightedDays = [], day, outsideCurrentMonth, onDateClick, ...other } = props;
 
   const isSelected =
     !props.outsideCurrentMonth && highlightedDays.indexOf(props.day.date()) >= 0;
+
+  const handleClick = () => {
+    onDateClick(props.day);
+  };
 
   return (
     <Badge
@@ -46,51 +46,37 @@ function ServerDay(props) {
       overlap="circular"
       badgeContent={isSelected ? '⭐' : undefined}
     >
-      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} onClick={handleClick} />
     </Badge>
   );
 }
 
 export default function Calendar() {
-  const requestAbortController = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [events, setEvents] = React.useState();
   const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
+  const [information, setInformation] = React.useState('');
 
   const fetchHighlightedDays = (date) => {
-    const controller = new AbortController();
-    fakeFetch(date, {
-      signal: controller.signal,
-    })
-      .then(({ daysToHighlight }) => {
-        setHighlightedDays(daysToHighlight);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        // ignore the error if it's caused by `controller.abort`
-        if (error.name !== 'AbortError') {
-          throw error;
-        }
-      });
+    setIsLoading(true);
+    // Simulated fetch
+    setTimeout(() => {
+      const daysInMonth = date.daysInMonth();
+      const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
+      setHighlightedDays(daysToHighlight);
+      setIsLoading(false);
+    }, 500);
+  };
 
-    requestAbortController.current = controller;
+  const handleDateClick = (date) => {
+    // Example: Change information text based on the clicked date
+    setInformation(`Events on ${date.format('YYYY-MM-DD')}`);
   };
 
   React.useEffect(() => {
-    //get the events
-    getEvents();
     fetchHighlightedDays(initialValue);
-    // abort request on unmount
-    return () => requestAbortController.current?.abort();
   }, []);
 
   const handleMonthChange = (date) => {
-    if (requestAbortController.current) {
-      // make sure that you are aborting useless requests
-      // because it is possible to switch between months pretty quickly
-      requestAbortController.current.abort();
-    }
-
     setIsLoading(true);
     setHighlightedDays([]);
     fetchHighlightedDays(date);
@@ -98,34 +84,35 @@ export default function Calendar() {
 
   return (
     <div className='calendar-container'>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div style={{ transform: 'scale(150%)'}}> {/* Adjust the width and height as needed */}
-        <DateCalendar
-        sx={{
-            // Add your styles here
-            backgroundColor: 'lightblue',
-            borderRadius: '8px',
-            padding: '16px',
-          }}
-          defaultValue={initialValue}
-          loading={isLoading}
-          onMonthChange={handleMonthChange}
-          renderLoading={() => <DayCalendarSkeleton />}
-          slots={{
-            day: ServerDay,
-          }}
-          slotProps={{
-            day: {
-              highlightedDays,
-            },
-          }}
-        />
-      </div>
-      <div className="info-box">
-        <h2>Information</h2>
-        <p>This is some information about the calendar.</p>
-      </div>
-    </LocalizationProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <div style={{ transform: 'scale(150%)'}}> {/* Adjust the width and height as needed */}
+          <DateCalendar
+            sx={{
+              // Add your styles here
+              backgroundColor: 'lightblue',
+              borderRadius: '8px',
+              padding: '16px',
+            }}
+            defaultValue={initialValue}
+            loading={isLoading}
+            onMonthChange={handleMonthChange}
+            renderLoading={() => <DayCalendarSkeleton />}
+            slots={{
+              day: ServerDay,
+            }}
+            slotProps={{
+              day: {
+                highlightedDays,
+                onDateClick: handleDateClick,
+              },
+            }}
+          />
+        </div>
+        <div className="info-box">
+          <h2>Event Name</h2>
+          <p>{information}</p>
+        </div>
+      </LocalizationProvider>
     </div>
   );
 }
