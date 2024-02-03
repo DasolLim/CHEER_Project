@@ -88,3 +88,24 @@ code {
   margin-left: 15%;
   width: auto;
 }
+
+h1{
+  text-align: center;
+  text-shadow: 2px 2px 5px rgb(233, 30, 182);
+}
+
+.welcomeImg{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.homeAbout{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  padding: 5%;
+  border: 10px solid #FFA500;
+}
