@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
-
+import { Container } from "@mui/material";
 
 function Register() {
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -22,7 +22,7 @@ function Register() {
                         alert("User already exists")
                     }
                     else if (res.data === "notexist") {
-                        history("/home", { state: { id: email } })
+                        navigate("/", { state: { id: email } })
                     }
                 })
                 .catch(e => {
@@ -40,24 +40,25 @@ function Register() {
 
 
     return (
-        <div className="login">
+        <Container>
+            <div className="login">
 
-            <h1>Signup</h1>
+                <h1>Signup</h1>
 
-            <form action="POST">
-                <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
-                <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
-                <input type="submit" onClick={submit} />
+                <form action="POST">
+                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
+                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
+                    <input type="submit" onClick={submit} />
+                </form>
 
-            </form>
+                <br />
+                <p>OR</p>
+                <br />
 
-            <br />
-            <p>OR</p>
-            <br />
+                <Link to="/">Login Page</Link>
 
-            <Link to="/">Login Page</Link>
-
-        </div>
+            </div>
+        </Container>
     )
 }
 
