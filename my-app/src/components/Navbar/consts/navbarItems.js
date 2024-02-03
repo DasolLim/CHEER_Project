@@ -22,8 +22,8 @@ export const mainNavbarItems = [
     {
         id: 2,
         icon: <CalendarMonthRoundedIcon />,
-        label: 'Calender',
-        route: 'calender',
+        label: 'Calendar',
+        route: 'calendar',
     },
     {
         id: 3,

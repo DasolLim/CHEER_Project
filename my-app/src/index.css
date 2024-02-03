@@ -411,3 +411,15 @@ h1{
   border-radius: 66px;
   border: 1px black solid;
 }
+
+.calendar-container{
+  display: flex;
+  margin-left: 25vw;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+}
+.info-box{
+  margin-left:200px;
+  border-color: 'lightblue';
+  border-radius: 10px;
+}
