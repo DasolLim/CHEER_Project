@@ -89,6 +89,27 @@ code {
   width: auto;
 }
 
+h1 {
+  text-align: center;
+  text-shadow: 2px 2px 5px rgb(233, 30, 182);
+}
+
+.welcomeImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.homeAbout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  padding: 5%;
+  border: 10px solid #FFA500;
+}
+
 /*Events and Information ----------------------------------------------------- */
 .events-container {
   width: 100%;
@@ -418,8 +439,6 @@ code {
   border: 1px solid #4169E1;
 } */
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
 .login-page,
 .register-page {
   width: 360px;
@@ -479,4 +498,17 @@ code {
 a:hover,
 a:focus {
   color: #4169E1;
+}
+
+.calendar-container {
+  display: flex;
+  margin-left: 25vw;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+}
+
+.info-box {
+  margin-left: 200px;
+  border-color: 'lightblue';
+  border-radius: 10px;
 }

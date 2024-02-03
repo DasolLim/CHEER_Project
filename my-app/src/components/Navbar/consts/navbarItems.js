@@ -22,8 +22,8 @@ export const mainNavbarItems = [
     {
         id: 2,
         icon: <CalendarMonthRoundedIcon />,
-        label: 'Calender',
-        route: 'calender',
+        label: 'Calendar',
+        route: 'calendar',
     },
     {
         id: 3,
@@ -31,18 +31,18 @@ export const mainNavbarItems = [
         label: 'Newsletter',
         route: 'newsletter',
     },
-    {
-        id: 4,
-        icon: <ChatRoundedIcon />,
-        label: 'Chat',
-        route: 'chat',
-    },
-    {
-        id: 5,
-        icon: <Diversity3RoundedIcon />,
-        label: 'Friends',
-        route: 'friends',
-    },
+    // {
+    //     id: 4,
+    //     icon: <ChatRoundedIcon />,
+    //     label: 'Chat',
+    //     route: 'chat',
+    // },
+    // {
+    //     id: 5,
+    //     icon: <Diversity3RoundedIcon />,
+    //     label: 'Friends',
+    //     route: 'friends',
+    // },
     {
         id: 6,
         icon: <InfoRoundedIcon />,

@@ -28,12 +28,9 @@ const Header = ({ title }) => {
             },
         },
         middleRow: {
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '20px',
-            marginLeft: '320px',
+            margin: 'auto',
+            width: '50%',
+            padding: '10px',
         },
         link: {
             fontWeight: 500,
@@ -42,6 +39,7 @@ const Header = ({ title }) => {
                 color: '#fff',
                 cursor: 'pointer',
             },
+            marginRight: '10px',
         },
         webButton: {
             marginRight: '5px',
