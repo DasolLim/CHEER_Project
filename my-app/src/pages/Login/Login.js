@@ -45,7 +45,7 @@ function Login() {
         <Container>
             <div className="login">
 
-                <h1>Logion to CHEER Account</h1>
+                <h1>Login to CHEER Account</h1>
 
                 <form action="POST">
                     <div class="register-page">
