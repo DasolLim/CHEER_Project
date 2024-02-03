@@ -1,11 +1,9 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
+import Events from '../../components/Events.js';
 
 const Info = () => {
     return (
-        <Grid item xs={8}>
-            This is info page.
-        </Grid>
+        <Events />
     )
 }
 
