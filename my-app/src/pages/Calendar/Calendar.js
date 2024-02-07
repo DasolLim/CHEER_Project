@@ -8,27 +8,23 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
+//initial date clicked
+const date = new Date();
+const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+const formattedDate = date.toLocaleDateString('en-US', options).split('/').join('-');
+const initialValue = dayjs(formattedDate);
 
-function getRandomNumber(min, max) {
-  return Math.round(Math.random() * (max - min) + min);
+//take the date being clicked and display its events to the right
+function setInfo(date){
+  console.log(date);
+  const events = getEvents(date)
 }
 
-function fakeFetch(date, { signal }) {
-  return new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      const daysInMonth = date.daysInMonth();
-      const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
+//function to retrieve events on specific day
+function getEvents(date){
 
-      resolve({ daysToHighlight });
-    }, 500);
-
-    signal.onabort = () => {
-      clearTimeout(timeout);
-      reject(new DOMException('aborted', 'AbortError'));
-    };
-  });
 }
-const initialValue = dayjs('2024-01-31');
+
 
 function ServerDay(props) {
   const { highlightedDays = [], day, outsideCurrentMonth, onDateClick, ...other } = props;
@@ -62,7 +58,7 @@ export default function Calendar() {
     setTimeout(() => {
       const daysInMonth = date.daysInMonth();
       //assign badge
-      const daysToHighlight = [1, 2, 3].map(() => 3);
+      const daysToHighlight = [1, 2, 3];
       setHighlightedDays(daysToHighlight);
       setIsLoading(false);
     }, 500);
@@ -70,10 +66,8 @@ export default function Calendar() {
 
   const handleDateClick = (date) => {
     // Example: Change information text based on the clicked date
-    if(date.$d === ('Wed Jan 03 2024 00:00:00 GMT-0500 (Eastern Standard Time)')){
-      console.log('correcy');
-    }
     setInformation(`Events on ${date.format('YYYY-MM-DD')}`);
+    setInfo(date)
   };
 
   React.useEffect(() => {
