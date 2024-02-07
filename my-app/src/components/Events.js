@@ -37,6 +37,8 @@ const Events = ({ eventName, eventDate, eventDescription}) => {
             </div>
             {eventForm && <EventForm closeForm={closeForm} />}
         </div>
+
+        
         );
   }
 
