@@ -5,7 +5,7 @@ const app = express();
 //Set routers
 const router_users = express.Router();
 router_users.use(express.json());
-app.use('/api/users',router_users);
+app.use('/api/users', router_users);
 
 const router_events = express.Router();
 router_events.use(express.json());
