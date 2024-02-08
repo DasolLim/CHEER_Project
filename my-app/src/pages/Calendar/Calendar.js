@@ -8,16 +8,30 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
-//initial date clicked
+//initial date is todays date
 const date = new Date();
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const formattedDate = date.toLocaleDateString('en-US', options).split('/').join('-');
 const initialValue = dayjs(formattedDate);
 
 //take the date being clicked and display its events to the right
-function setInfo(date){
-  console.log(date);
-  const events = getEvents(date)
+function setInfo(information){
+  if (information === undefined || information === ''){
+    return;
+  }else{
+    const info = [];
+    //const events = getEvents(date);
+    const events = ['test','1','2'];
+    let index = 0;
+    for (const e of events){
+      const i = <li style={{listStyle: 'none'}} key = {index}>{e}</li>;
+      const button = <button>Sign Up</button>
+      info.push(i);
+      info.push(button);
+      index++;
+    }
+    return info;
+  }
 }
 
 //function to retrieve events on specific day
@@ -67,7 +81,7 @@ export default function Calendar() {
   const handleDateClick = (date) => {
     // Example: Change information text based on the clicked date
     setInformation(`Events on ${date.format('YYYY-MM-DD')}`);
-    setInfo(date)
+    setInfo(information);
   };
 
   React.useEffect(() => {
@@ -107,16 +121,8 @@ export default function Calendar() {
           />
         </div>
         <div className={`info-box ${!information ? 'hidden' : ''}`}>
-          {information && (
-            <>
-              <h2>{information}</h2>
-              <p>Cherry Picking 2pm - 6 pm</p>
-              <button id='signUpButton'>See Info</button>
-              <br></br>
-              <p>Outdoor Painting 5pm - 10 pm</p>
-              <button id='signUpButton'>See Info</button>
-            </>
-          )}
+          <h2>{information}</h2>
+          <p>{setInfo(information)}</p>
         </div>
       </LocalizationProvider>
     </div>
