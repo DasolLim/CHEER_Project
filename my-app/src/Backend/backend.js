@@ -86,6 +86,32 @@ router_users.post('/register', async (req, res) => {
   }
 });
 
+//Login a parent user
+router_users.post('/login', async (req, res) => {
+  try {
+    console.log('hello')
+    const credentials = req.body;
+    //Open client
+    await client.connect();
+    console.log('rawr')
+    //Login query
+    const query = {
+      email: credentials.email,
+      password: credentials.password
+    }
+    const results = await users.findOne(query);
+    console.log(results);
+    if (results)
+      res.status(200).send(results);
+  } catch (error) {
+    //Send status response
+    res.status(400).send('Bad Request');
+  } finally {
+    //Close client
+    await client.close();
+  }
+});
+
 //Delete a parent user
 router_users.delete('/delete', async (req, res) => {
   try {
