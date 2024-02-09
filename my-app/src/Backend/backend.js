@@ -11,9 +11,9 @@ const router_events = express.Router();
 router_events.use(express.json());
 app.use('/api/events', router_events);
 
-const router_calendar = express.Router();
-router_calendar.use(express.json());
-app.use('/api/calendar', router_calendar);
+const router_attendees = express.Router();
+router_attendees.use(express.json());
+app.use('/api/attendees', router_attendees);
 
 //Setup middleware to do logging
 app.use((req, res, next) => {
@@ -51,7 +51,7 @@ run().catch(console.dir);
 const db = client.db("CHEER");
 const users = db.collection('users');
 const events = db.collection('events');
-const calendar = db.collection('calendar');
+const attendees = db.collection('attendees');
 
 //Assign a port
 let port = 5000;
@@ -126,7 +126,7 @@ router_users.delete('/delete', async (req, res) => {
   }
 });
 
-//EVENTS FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
+//ATTENDEE FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
 router_events.post('/signup', async (req, res) => {
   try {
     //Open client
@@ -151,32 +151,67 @@ router_events.post('/signup', async (req, res) => {
   }
 });
 
-//CALENDAR FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
-router_calendar.post('/create', async (req, res) => {
+//EVENT FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
+router_events.post('/create', async (req, res) => {
   try {
-    //Open client
-    await client.connect();
-    //Get login information from HTML body
+    // Get the next event ID
+    const eventID = await getNextEventID();
+    // Get login information from HTML body
     const event = req.body;
-    //Create a document to be inserted
+    // Create a document to be inserted
     const doc = {
+      eventID: eventID,
       description: event.description,
-      event_name: event.full_name,
+      event_name: event.name,
       start_time: event.start_time,
       end_time: event.end_time,
       date: event.date,
-      capacity: event.capacity,
-      attendees: event.attendees
-    }
-    //Insert into database
+      capacity: event.capacity
+    };
+    // Insert into database
     await events.insertOne(doc);
-    //Send status response
-    res.status(200).send('Signup Complete');
+    // Send status response
+    res.status(200).send('Event Created');
   } catch (error) {
-    //Send status response
-    res.status(400).send('Bad Request');
+    console.error('Error creating event:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+async function getNextEventID() {
+  try {
+    // Connect to MongoDB
+    await client.connect();
+    // Query for the maximum event ID
+    const maxIDDocument = await events.find({}, { eventID: 1 }).sort({ eventID: -1 }).limit(1).toArray();
+    // If there are documents with event IDs
+    if (maxIDDocument.length > 0) {
+      // Extract the maximum event ID
+      const maxID = maxIDDocument[0].eventID;
+      // Return the next event ID
+      return maxID + 1;
+    } else {
+      // If no documents in the collection yet, start with 1
+      return 1;
+    }
+  } catch (error) {
+    console.error('Error fetching max event ID:', error);
+    throw error;
+  }
+}
+
+
+
+//get all events and their dates
+router_users.get('/events', async (req, res) => {
+  try {
+    await client.connect();
+    
+    res.status(200).send('Deletion Successful');
+  } catch (error) {
+    res.status(404).send('User not found');
   } finally {
-    //Close client
     await client.close();
   }
 });
