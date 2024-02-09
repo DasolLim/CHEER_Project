@@ -1,3 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-container {
+  background-color: #333; /* Background color of the navigation */
+  width: 100%;
+  text-align: center;
+}
+
+.nav-container ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-container ul li {
+  display: inline;
+}
+
+.nav-container ul li a {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px; /* Adjust padding as needed */
+}
+
+.nav-container ul li a:hover {
+  background-color: #555; /* Background color on hover */
+}
+
+.button-container {
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.button-container button {
+  width: 65vw;
+  border: none;
+  border-radius: 20px; /* Adjust as needed */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 15px;
+}
+
+#btn1{
+background-color: lightblue;
+}
+
+#btn2{
+  background-color: lightcoral;
+}
+
+#btn3{
+  background-color: lightgoldenrodyellow;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -523,12 +583,6 @@ a:focus {
   border-radius: 5px;
   background-color: #007acc;
   transition: background-color 0.3s ease;
-
-  /* Optional hover effect */
-  &:hover {
-    background-color: white;
-    color: #007acc;
-  }
 }
 
 .hidden{
