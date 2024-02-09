@@ -12,7 +12,9 @@ import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 const date = new Date();
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const formattedDate = date.toLocaleDateString('en-US', options).split('/').join('-');
+//initial value for calendar
 const initialValue = dayjs(formattedDate);
+
 
 //take the date being clicked and display its events to the right
 function setInfo(information){
@@ -32,11 +34,6 @@ function setInfo(information){
     }
     return info;
   }
-}
-
-//function to retrieve events on specific day
-function getEvents(date){
-
 }
 
 
@@ -63,35 +60,51 @@ function ServerDay(props) {
 
 export default function Calendar() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
+  const [highlightedDays, setHighlightedDays] = React.useState([]);
   const [information, setInformation] = React.useState('');
 
-  const fetchHighlightedDays = (date) => {
+
+  React.useEffect(() =>{
+    getMonthlyEvents(initialValue.format('YYYY-MM'));
+  },[])
+  const fetchHighlightedDays = (daysToHighlight) => {
     setIsLoading(true);
-    // Simulated fetch
     setTimeout(() => {
-      const daysInMonth = date.daysInMonth();
-      //assign badge
-      const daysToHighlight = [1, 2, 3];
       setHighlightedDays(daysToHighlight);
       setIsLoading(false);
     }, 500);
   };
+  //function to retrieve events for the selected month
+  async function getMonthlyEvents(date){
+    try {
+      const response = await fetch(`/api/events/monthly/${date}`);
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+      const data = await response.json();
+      //once data is received, assign a badge to every day with an event
+      const datesToHighlight = [];
+      for (const d of data){
+        const date = dayjs(d.date).format('DD');
+        datesToHighlight.push(parseInt(date));
+      }
+      fetchHighlightedDays(datesToHighlight);
+    } catch (error) {
+      console.error('Error:', error);
+      return null; // Handle the error gracefully
+    }
+  };
 
   const handleDateClick = (date) => {
-    // Example: Change information text based on the clicked date
+    // change text info on date click
     setInformation(`Events on ${date.format('YYYY-MM-DD')}`);
     setInfo(information);
   };
 
-  React.useEffect(() => {
-    fetchHighlightedDays(initialValue);
-  }, []);
-
   const handleMonthChange = (date) => {
     setIsLoading(true);
     setHighlightedDays([]);
-    fetchHighlightedDays(date);
+    getMonthlyEvents(dayjs(date.$d).format('YYYY-MM'));
   };
 
   return (
@@ -108,6 +121,7 @@ export default function Calendar() {
             defaultValue={initialValue}
             loading={isLoading}
             onMonthChange={handleMonthChange}
+            onYearChange={handleMonthChange}
             renderLoading={() => <DayCalendarSkeleton />}
             slots={{
               day: ServerDay,
