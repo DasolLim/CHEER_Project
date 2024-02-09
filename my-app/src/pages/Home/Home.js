@@ -15,15 +15,6 @@ function Home() {
     // }
     return (
         <>
-        <nav class="nav-container">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-
         <div className='grid grid-rows-4 gap-y-0.1 max-w-[800px] justify-center flex-col text-center items-center mx-auto'>
             <div class="button-container">
                 <button id="btn1">Button 1</button>
