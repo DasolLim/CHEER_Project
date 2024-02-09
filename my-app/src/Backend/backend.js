@@ -178,7 +178,7 @@ router_events.post('/create', async (req, res) => {
   }
 });
 
-
+//auto increment eventID
 async function getNextEventID() {
   try {
     // Connect to MongoDB
@@ -202,15 +202,36 @@ async function getNextEventID() {
 }
 
 
-
-//get all events and their dates
-router_users.get('/events', async (req, res) => {
+//ALL DATES MUST BE IN FORMAT: 'YYYY-MM-DD'
+//get all events on a specifc date
+router_events.get('/:date', async (req, res) => {
+  const date = req.params.date;
   try {
     await client.connect();
-    
-    res.status(200).send('Deletion Successful');
+    //get the event names and IDs for the queried date
+    const event_list = await events.find({ date: date }).project({ event_name: 1, eventID: 1 }).toArray();
+    console.log(event_list);
+    res.json(event_list);
   } catch (error) {
-    res.status(404).send('User not found');
+    console.error('Error fetching events:', error);
+    res.status(404).send('No events on date');
+  } finally {
+    await client.close();
+  }
+});
+
+//return all the dates in which there are events for a specific month/year
+router_events.get('/monthly/:monthAndYear', async (req, res) => {
+  const month_and_year = req.params.monthAndYear;
+  try {
+    await client.connect();
+    //get the event names and IDs for the queried date
+    const event_list = await events.find({ date: {$regex: month_and_year, $options: 'i'} }).project({ date: 1, eventID: 1 }).toArray();
+    console.log(event_list);
+    res.json(event_list);
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(404).send('No events on date');
   } finally {
     await client.close();
   }
