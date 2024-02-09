@@ -8,27 +8,37 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DayCalendarSkeleton } from '@mui/x-date-pickers/DayCalendarSkeleton';
 
+//initial date is todays date
+const date = new Date();
+const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+const formattedDate = date.toLocaleDateString('en-US', options).split('/').join('-');
+const initialValue = dayjs(formattedDate);
 
-function getRandomNumber(min, max) {
-  return Math.round(Math.random() * (max - min) + min);
+//take the date being clicked and display its events to the right
+function setInfo(information){
+  if (information === undefined || information === ''){
+    return;
+  }else{
+    const info = [];
+    //const events = getEvents(date);
+    const events = ['test','1','2'];
+    let index = 0;
+    for (const e of events){
+      const i = <li style={{listStyle: 'none'}} key = {index}>{e}</li>;
+      const button = <button>Sign Up</button>
+      info.push(i);
+      info.push(button);
+      index++;
+    }
+    return info;
+  }
 }
 
-function fakeFetch(date, { signal }) {
-  return new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      const daysInMonth = date.daysInMonth();
-      const daysToHighlight = [1, 2, 3].map(() => getRandomNumber(1, daysInMonth));
+//function to retrieve events on specific day
+function getEvents(date){
 
-      resolve({ daysToHighlight });
-    }, 500);
-
-    signal.onabort = () => {
-      clearTimeout(timeout);
-      reject(new DOMException('aborted', 'AbortError'));
-    };
-  });
 }
-const initialValue = dayjs('2024-01-31');
+
 
 function ServerDay(props) {
   const { highlightedDays = [], day, outsideCurrentMonth, onDateClick, ...other } = props;
@@ -62,7 +72,7 @@ export default function Calendar() {
     setTimeout(() => {
       const daysInMonth = date.daysInMonth();
       //assign badge
-      const daysToHighlight = [1, 2, 3].map(() => 3);
+      const daysToHighlight = [1, 2, 3];
       setHighlightedDays(daysToHighlight);
       setIsLoading(false);
     }, 500);
@@ -70,10 +80,8 @@ export default function Calendar() {
 
   const handleDateClick = (date) => {
     // Example: Change information text based on the clicked date
-    if(date.$d === ('Wed Jan 03 2024 00:00:00 GMT-0500 (Eastern Standard Time)')){
-      console.log('correcy');
-    }
     setInformation(`Events on ${date.format('YYYY-MM-DD')}`);
+    setInfo(information);
   };
 
   React.useEffect(() => {
@@ -113,16 +121,8 @@ export default function Calendar() {
           />
         </div>
         <div className={`info-box ${!information ? 'hidden' : ''}`}>
-          {information && (
-            <>
-              <h2>{information}</h2>
-              <p>Cherry Picking 2pm - 6 pm</p>
-              <button id='signUpButton'>See Info</button>
-              <br></br>
-              <p>Outdoor Painting 5pm - 10 pm</p>
-              <button id='signUpButton'>See Info</button>
-            </>
-          )}
+          <h2>{information}</h2>
+          <p>{setInfo(information)}</p>
         </div>
       </LocalizationProvider>
     </div>
