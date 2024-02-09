@@ -13,29 +13,22 @@ function Register() {
 
     async function submit(e) {
         e.preventDefault();
-
         try {
-
-            await axios.post("http://localhost:8000/signup", {
-                name, userType, email, password
-            })
-                .then(res => {
-                    if (res.data === "exist") {
-                        alert("User already exists")
-                    }
-                    else if (res.data === "notexist") {
-                        navigate("/", { state: { id: email } })
-                    }
-                })
-                .catch(e => {
-                    alert("wrong details")
-                    console.log(e);
-                })
-
+            alert('potato');
+            const login = {
+                username: name,
+                userType: userType,
+                email: email,
+                password: password
+            };
+            const response = await fetch("/api/users/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", },
+                body: JSON.stringify(login)
+            });
         }
         catch (e) {
             console.log(e);
-
         }
 
     }
@@ -53,8 +46,8 @@ function Register() {
                             <form class="register-form">
                                 <input type="text" onChange={(e) => { setName(e.target.value) }} placeholder="Name" />
                                 <input type="text" onChange={(e) => { setUserType(e.target.value) }} placeholder="User Type" />
-                                <input type="text" onChange={(e) => { setPassword(e.target.value) }} placeholder="Email" />
-                                <input type="password" onChange={(e) => { setEmail(e.target.value) }} placeholder="Password" />
+                                <input type="text" onChange={(e) => { setEmail(e.target.value) }} placeholder="Email" />
+                                <input type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Password" />
                                 {/* <button>create</button> */}
                                 <button type="submit" onClick={submit}>create</button>
                                 <p class="message"> Already registered? <a href="login">Login</a></p>

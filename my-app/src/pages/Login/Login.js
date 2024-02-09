@@ -13,24 +13,21 @@ function Login() {
 
     async function submit(e) {
         e.preventDefault();
-
         try {
+            const login = {
+                email: email,
+                password: password
+            }
+            const response = await fetch("/api/users/login",
+                {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json", },
+                    body: JSON.stringify(login)
+                });
 
-            await axios.post("http://localhost:8000/", {
-                email, password
-            })
-                .then(res => {
-                    if (res.data === "exist") {
-                        navigate("/", { state: { id: email } })
-                    }
-                    else if (res.data === "notexist") {
-                        alert("User have not sign up")
-                    }
-                })
-                .catch(e => {
-                    alert("wrong details")
-                    console.log(e);
-                })
+            if (response.ok) {
+                navigate("/");
+            }
 
         }
         catch (e) {

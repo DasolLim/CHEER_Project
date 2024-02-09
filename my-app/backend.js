@@ -5,7 +5,7 @@ const app = express();
 //Set routers
 const router_users = express.Router();
 router_users.use(express.json());
-app.use('/api/users',router_users);
+app.use('/api/users', router_users);
 
 const router_events = express.Router();
 router_events.use(express.json());
@@ -77,6 +77,32 @@ router_users.post('/register', async (req, res) => {
     await users.insertOne(doc);
     //Send status response
     res.status(200).send('Registration Complete');
+  } catch (error) {
+    //Send status response
+    res.status(400).send('Bad Request');
+  } finally {
+    //Close client
+    await client.close();
+  }
+});
+
+//Login a parent user
+router_users.post('/login', async (req, res) => {
+  try {
+    console.log('hello')
+    const credentials = req.body;
+    //Open client
+    await client.connect();
+    console.log('rawr')
+    //Login query
+    const query = {
+      email: credentials.email,
+      password: credentials.password
+    }
+    const results = await users.findOne(query);
+    console.log(results);
+    if (results)
+      res.status(200).send(results);
   } catch (error) {
     //Send status response
     res.status(400).send('Bad Request');

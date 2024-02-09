@@ -579,7 +579,7 @@ a:focus {
   background-color: #ffb730; /* Set the background color to yellow */
   padding: 20px; /* Add some padding for spacing */
 }
-#signUpButton{
+button{
   color: white;
   text-decoration: none;
   padding: 10px 20px;
