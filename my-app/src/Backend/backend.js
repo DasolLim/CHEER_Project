@@ -236,3 +236,21 @@ router_events.get('/monthly/:monthAndYear', async (req, res) => {
     await client.close();
   }
 });
+
+
+//return info of specific event based on ID
+router_events.get('/event/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    await client.connect();
+    //get the event names and IDs for the queried date
+    const event_list = await events.findOne({eventID: id});
+    console.log(event_list);
+    res.json(event_list);
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(404).send('No events on date');
+  } finally {
+    await client.close();
+  }
+});
