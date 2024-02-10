@@ -42,6 +42,7 @@ export default function Calendar() {
   const [information, setInformation] = React.useState('');
   const [events, setEvents] = React.useState([]);
   const [eventInfo, setEventInfo] = React.useState([]);
+  const [selectedChild, setSelectedChild] = React.useState('');
 
 
   React.useEffect(() =>{
@@ -88,7 +89,7 @@ export default function Calendar() {
       const info = [];
       for (const d of data){
         const i = <li style={{listStyle: 'none'}} key = {data.eventID}>{d.event_name}</li>;
-        const button = <button onClick={() => handleSignUp(d)}>Sign Up</button>
+        const button = <button onClick={() => handleButtonClick(d)}>Read More</button>
         info.push(i);
         info.push(button);
       }
@@ -110,14 +111,14 @@ export default function Calendar() {
       console.log('data: ' + data);
       //once data is received, display events with sign up buttons
       const info = [];
-      let index = 0;
-      const desc = <li style={{listStyle: 'none'}} key = {index}>Description: {data.description}</li>;
-      const start = <li style={{listStyle: 'none'}} key = {index}>Start Time: {data.start_time} pm</li>;
-      const end = <li style={{listStyle: 'none'}} key = {index}>End Time: {data.end_time} pm</li>;
+      const desc = <li style={{listStyle: 'none'}}>Description: {data.description}</li>;
+      const start = <li style={{listStyle: 'none'}}>Start Time: {data.start_time} pm</li>;
+      const end = <li style={{listStyle: 'none'}}>End Time: {data.end_time} pm</li>;
+      const button = <button onClick={() => handleSignUp(data)}>Sign Up!</button>
       info.push(desc);
       info.push(start);
       info.push(end);
-      console.log(info);
+      info.push(button);
       return info;
     } catch (error) {
       console.error('Error:', error);
@@ -125,20 +126,48 @@ export default function Calendar() {
     }
   }
 
-  const handleSignUp = async (event) =>{
+  //handles 'Read More' button click
+  const handleButtonClick = async (event) =>{
     //set title, remove rest of events from screen
     setInformation(event.event_name);
     setEvents(null);
     const info = await getEventInfo(event.eventID);
     setEventInfo(info);
+  }
+  //handles 'Sign Up' button click
+  const handleSignUp = async (event) =>{
+    //set title, remove rest of events from screen
+    setInformation(event.event_name);
+    setEvents(null);
+    //add questions for sign up
+    const info = [];
+    const q1 = <li style={{listStyle: 'none'}}>Who will be attending?:</li>;
+    const select1 = <select value = {selectedChild} onChange={handleSelectedChildChange}>
+      <option>Child name 1...</option>
+      <option>Child name 2...</option>
+    </select>
+    const button = <button onClick={() => handleSignUp}>Confirm Sign Up</button>
+    info.push(q1);
+    info.push(select1);
+    info.push(button);
+    setEventInfo(info);
+  }
 
+  //change selected child for event sign up
+  const handleSelectedChildChange = (event) =>{
+    setSelectedChild(event.target.value);
   }
 
   const handleDateClick = async (date) => {
     // change text info on date click
     setInformation(`Events on ${date.format('YYYY-MM-DD')}`);
     const events = await getEvents(date.format('YYYY-MM-DD'));
-    setEvents(events);
+    if(events.length != 0){
+      setEvents(events);
+    }else{
+      console.log('here');
+      setEvents(['No events!'])
+    }
     setEventInfo(null);
   };
 

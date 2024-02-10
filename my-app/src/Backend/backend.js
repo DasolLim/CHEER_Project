@@ -210,7 +210,6 @@ router_events.get('/:date', async (req, res) => {
     await client.connect();
     //get the event names and IDs for the queried date
     const event_list = await events.find({ date: date }).project({ event_name: 1, eventID: 1 }).toArray();
-    console.log(event_list);
     res.json(event_list);
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -227,7 +226,6 @@ router_events.get('/monthly/:monthAndYear', async (req, res) => {
     await client.connect();
     //get the event names and IDs for the queried date
     const event_list = await events.find({ date: {$regex: month_and_year, $options: 'i'} }).project({ date: 1, eventID: 1 }).toArray();
-    console.log(event_list);
     res.json(event_list);
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -245,7 +243,6 @@ router_events.get('/event/:id', async (req, res) => {
     await client.connect();
     //get the event names and IDs for the queried date
     const event_list = await events.findOne({eventID: id});
-    console.log(event_list);
     res.json(event_list);
   } catch (error) {
     console.error('Error fetching events:', error);
