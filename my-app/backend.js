@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
 
+//testing
+
 //Set routers
 const router_users = express.Router();
 router_users.use(express.json());
