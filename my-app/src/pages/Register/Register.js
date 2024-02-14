@@ -14,25 +14,25 @@ function Register() {
     async function submit(e) {
         e.preventDefault();
         try {
-            alert('potato');
-            const login = {
+            const userData = {
                 username: name,
                 userType: userType,
                 email: email,
-                password: password
+                password: password,
             };
-            const response = await fetch("/api/users/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", },
-                body: JSON.stringify(login)
-            });
-        }
-        catch (e) {
-            console.log(e);
-        }
 
+            // Use axios for making the POST request
+            const response = await axios.post("/api/users/register", userData);
+
+            // Handle response as needed (e.g., redirect after successful registration)
+            console.log(response.data);
+
+            // Navigate to another page after successful registration
+            navigate("/login");
+        } catch (error) {
+            console.error(error);
+        }
     }
-
 
     return (
         <Container>

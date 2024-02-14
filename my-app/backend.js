@@ -1,5 +1,7 @@
 //Get express module
 const express = require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const app = express();
 
 //Set routers
@@ -31,6 +33,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+
 //Checking that a connection can be formed
 async function run() {
   try {
@@ -44,6 +47,7 @@ async function run() {
     await client.close();
   }
 }
+
 //Run the connection check
 run().catch(console.dir);
 
@@ -57,58 +61,97 @@ const attendees = db.collection('attendees');
 let port = 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-//USERS FUNCTIONALITIES ------------------------------------------------------------------------------------------------------------------------------
-//Register new parent user
+// Database connection
+async function connectToDatabase() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    throw error;
+  }
+}
+
+// Database disconnection
+async function closeDatabaseConnection() {
+  try {
+    await client.close();
+    console.log("Closed MongoDB connection");
+  } catch (error) {
+    console.error("Error closing MongoDB connection:", error);
+    throw error;
+  }
+}
+
+// Register new parent user with JWT for password
 router_users.post('/register', async (req, res) => {
   try {
-    //Open client
-    await client.connect();
-    //Get login information from HTML body
+    // Open client connection
+    await connectToDatabase();
+
     const login = req.body;
-    //Create a document to be inserted
+
+    // Hash the password using bcrypt
+    const hashedPassword = await bcrypt.hash(login.password, 10);
+
     const doc = {
       username: login.username,
-      password: login.password,
+      password: hashedPassword,
       email: login.email,
       type: "Parent",
       accounts: [],
-    }
-    //Insert into database
+    };
+
+    // Insert into database
     await users.insertOne(doc);
-    //Send status response
-    res.status(200).send('Registration Complete');
+
+    // Create and send JWT token
+    const token = jwt.sign({ username: login.username, email: login.email }, 'your_secret_key', { expiresIn: '1h' });
+    res.status(200).json({ message: 'Registration Complete', token });
   } catch (error) {
-    //Send status response
-    res.status(400).send('Bad Request');
+    console.error('Error registering user:', error);
+    res.status(400).json({ error: 'Bad Request' });
   } finally {
-    //Close client
-    await client.close();
+    // Close client connection
+    await closeDatabaseConnection();
   }
 });
 
-//Login a parent user
+// Login a parent user with hashed password
 router_users.post('/login', async (req, res) => {
   try {
-    console.log('hello')
     const credentials = req.body;
-    //Open client
-    await client.connect();
-    console.log('rawr')
-    //Login query
+
+    // Open client connection
+    await connectToDatabase();
+
+    // Login query
     const query = {
       email: credentials.email,
-      password: credentials.password
+    };
+
+    const user = await users.findOne(query);
+
+    if (user) {
+      // Compare the hashed password
+      const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+
+      if (isPasswordValid) {
+        // Create and send JWT token
+        const token = jwt.sign({ username: user.username, email: user.email }, 'your_secret_key', { expiresIn: '1h' });
+        res.status(200).json({ message: 'Login Successful', token });
+      } else {
+        res.status(401).json({ error: 'Invalid Password' });
+      }
+    } else {
+      res.status(404).json({ error: 'User not found' });
     }
-    const results = await users.findOne(query);
-    console.log(results);
-    if (results)
-      res.status(200).send(results);
   } catch (error) {
-    //Send status response
-    res.status(400).send('Bad Request');
+    console.error('Error logging in:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   } finally {
-    //Close client
-    await client.close();
+    // Close client connection
+    await closeDatabaseConnection();
   }
 });
 
@@ -225,7 +268,7 @@ router_events.get('/monthly/:monthAndYear', async (req, res) => {
   try {
     await client.connect();
     //get the event names and IDs for the queried date
-    const event_list = await events.find({ date: {$regex: month_and_year, $options: 'i'} }).project({ date: 1, eventID: 1 }).toArray();
+    const event_list = await events.find({ date: { $regex: month_and_year, $options: 'i' } }).project({ date: 1, eventID: 1 }).toArray();
     res.json(event_list);
   } catch (error) {
     console.error('Error fetching events:', error);
@@ -242,7 +285,7 @@ router_events.get('/event/:id', async (req, res) => {
   try {
     await client.connect();
     //get the event names and IDs for the queried date
-    const event_list = await events.findOne({eventID: id});
+    const event_list = await events.findOne({ eventID: id });
     res.json(event_list);
   } catch (error) {
     console.error('Error fetching events:', error);
